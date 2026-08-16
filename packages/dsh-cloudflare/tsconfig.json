@@ -1,0 +1,36 @@
+{
+  // Portable build config for @try-works/dsh-cloudflare.
+  //
+  // Self-contained on purpose: it must compile in a fresh clone whose only
+  // node_modules are this package's devDependencies (published peers plus
+  // typescript/@types/node). No absolute paths, no harness project
+  // references. The compiler options mirror the DeepSeek Harness base
+  // tsconfig so the emitted JS/declarations match the harness convention.
+  "compilerOptions": {
+    "target": "es2024",
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    "composite": true,
+    "incremental": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowImportingTsExtensions": true,
+    "rewriteRelativeImportExtensions": true,
+    "verbatimModuleSyntax": false,
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true,
+    "noImplicitOverride": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "types": ["node"],
+    "rootDir": "src",
+    "outDir": "lib",
+    "tsBuildInfoFile": "tsconfig.tsbuildinfo"
+  },
+  "include": ["src"]
+}

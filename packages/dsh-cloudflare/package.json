@@ -1,0 +1,68 @@
+{
+  "name": "@try-works/dsh-cloudflare",
+  "description": "DeepSeek Harness plugin providing 1:1 parity with the Codex Cloudflare plugin (skills + slash commands + Cloudflare API MCP)",
+  "version": "0.1.2",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/try-works/dsh-cloudflare.git",
+    "directory": "packages/dsh-cloudflare"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./manifest": {
+      "types": "./lib/manifest.d.ts",
+      "default": "./lib/manifest.js"
+    },
+    "./cordis.patch.yml": "./cordis.patch.yml",
+    "./src/*": "./src/*",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib/*.js",
+    "lib/*.d.ts",
+    "skills",
+    "commands",
+    "assets",
+    "plugin.json",
+    ".mcp.json",
+    "src",
+    "cordis.patch.yml"
+  ],
+  "scripts": {
+    "build": "node ../../scripts/typecheck.mjs",
+    "prepack": "node ../../scripts/typecheck.mjs",
+    "typecheck": "node ../../scripts/typecheck.mjs"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  },
+  "dependencies": {
+    "@deepseek-ai/dsh-mcp-client": "^0.1.0-rc.5"
+  },
+  "peerDependencies": {
+    "@deepseek-ai/cordis": "^4.0.1",
+    "@deepseek-ai/dsh-commands": "^0.1.0-rc.5",
+    "@deepseek-ai/dsh-llm": "^0.1.0-rc.5",
+    "@deepseek-ai/dsh-skill": "^0.1.0-rc.5"
+  },
+  "devDependencies": {
+    "@deepseek-ai/cordis": "^4.0.1",
+    "@deepseek-ai/dsh-commands": "^0.1.0-rc.5",
+    "@deepseek-ai/dsh-llm": "^0.1.0-rc.5",
+    "@deepseek-ai/dsh-skill": "^0.1.0-rc.5",
+    "@types/node": "^22.20.0",
+    "typescript": "^6.0.3"
+  }
+}

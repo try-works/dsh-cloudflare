@@ -1,0 +1,28 @@
+# Ready-to-apply DSH patch overlay for dsh-cloudflare (the --patch path).
+#
+# Preferred install — auto-mounts this package's own layer via dsh.bundle:
+#
+#   dsh plugin --profile <profile> add @try-works/dsh-cloudflare
+#
+# That reconciles the package into dsh.profile.bundles, which composes
+# packages/dsh-cloudflare/cordis.patch.yml (the plugin row plus the
+# cloudflare-api mcp-client row) over the profile.
+#
+# Fallback — install the package as a plain dependency and apply this overlay:
+#
+#   dsh --profile <profile> --patch ./cordis.yml
+#
+# The rows below must stay in sync with
+# packages/dsh-cloudflare/cordis.patch.yml (there is no patch-level file
+# include). Profiles must already provide ctx.skills, ctx.commands, and
+# ctx.tools (the shipped dsh-base bundle does).
+
+- insert:
+    - id: cloudflare
+      name: '@try-works/dsh-cloudflare'
+    - id: cloudflare-api
+      name: '@deepseek-ai/dsh-mcp-client'
+      config:
+        serverName: cloudflare-api
+        transport: streamable-http
+        url: https://mcp.cloudflare.com/mcp

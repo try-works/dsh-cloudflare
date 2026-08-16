@@ -1,0 +1,22 @@
+# dsh-cloudflare bundle patch — the patch layer this package exports.
+#
+# Declared by `dsh.bundle.patch` in package.json. When the package is
+# installed with:
+#
+#   dsh plugin --profile <profile> add @try-works/dsh-cloudflare
+#
+# dsh reconciles it into `dsh.profile.bundles` and composes this layer over
+# every profile that already provides ctx.skills, ctx.commands, and ctx.tools
+# (the shipped dsh-base bundle does). It mounts two rows: this plugin (the
+# bundled Cloudflare skills plus the two slash commands) and one mcp-client
+# instance for the single MCP server the Codex cloudflare plugin declares.
+
+- insert:
+    - id: cloudflare
+      name: '@try-works/dsh-cloudflare'
+    - id: cloudflare-api
+      name: '@deepseek-ai/dsh-mcp-client'
+      config:
+        serverName: cloudflare-api
+        transport: streamable-http
+        url: https://mcp.cloudflare.com/mcp
