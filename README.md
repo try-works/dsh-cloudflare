@@ -57,6 +57,8 @@ one `cloudflare-api` mcp-client row beside the plugin row. The
 
 ## Install
 
+Published to npm as [`@try-works/dsh-cloudflare`](https://www.npmjs.com/package/@try-works/dsh-cloudflare).
+
 `@try-works/dsh-cloudflare` is a DSH **bundle** as well as a plugin: its
 `package.json` declares `dsh.bundle.patch` pointing at the shipped
 `cordis.patch.yml`, which inserts the plugin row plus the MCP client row.
@@ -68,10 +70,10 @@ dsh plugin --profile <profile> add @try-works/dsh-cloudflare
 
 `dsh plugin` forwards to pnpm in the profile directory, then reconciles the
 package into `dsh.profile.bundles` because it declares `dsh.bundle`; on the
-next boot the profile composes
-`packages/dsh-cloudflare/cordis.patch.yml` over its layers. (Installing it as
-a plain dependency — e.g. `pnpm add` — stays possible but only warns and does
-not mount the layer; apply the repo-root `cordis.yml` overlay in that case.)
+next boot the profile composes the shipped `cordis.patch.yml` over its
+layers. (Installing it as a plain dependency — e.g. `pnpm add
+@try-works/dsh-cloudflare` — stays possible but only warns and does not mount
+the layer; apply the repo-root `cordis.yml` overlay in that case.)
 
 For a manual `--patch` install, the repo-root `cordis.yml` carries the same
 two rows:
