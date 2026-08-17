@@ -53,7 +53,71 @@ The Codex plugin declares one MCP server. DSH models one MCP server per
 `@deepseek-ai/dsh-mcp-client` instance, so the shipped patch layer inserts
 one `cloudflare-api` mcp-client row beside the plugin row. The
 `cloudflare-api` server mirrors `.mcp.json`
-(`https://mcp.cloudflare.com/mcp`).
+(`https://mcp.cloudflare.com/mcp`) — the Cloudflare **Code Mode** server
+that covers the full Cloudflare API (2,500+ endpoints in ~1,000 tokens).
+
+Cloudflare also publishes a set of focused, domain-specific MCP servers in
+[cloudflare/mcp-server-cloudflare](https://github.com/cloudflare/mcp-server-cloudflare).
+For 1:1 Codex parity this plugin ships only Code Mode; add the rest per
+profile with the `--patch` overlay below (each is one
+`@deepseek-ai/dsh-mcp-client` row).
+
+#### Cloudflare MCP server catalog
+
+| Server | Purpose | URL |
+| --- | --- | --- |
+| Code mode | Full Cloudflare API via code execution (minimal token overhead) | `https://mcp.cloudflare.com/mcp` |
+| AI Gateway | Search logs; prompt/response details | `https://ai-gateway.mcp.cloudflare.com/mcp` |
+| Audit Logs | Query audit logs, generate review reports | `https://auditlogs.mcp.cloudflare.com/mcp` |
+| AutoRAG | Search and query account AutoRAG instances | `https://autorag.mcp.cloudflare.com/mcp` |
+| Browser Run | Fetch pages, convert to markdown, screenshots | `https://browser.mcp.cloudflare.com/mcp` |
+| Cloudflare Blog | Search and read Cloudflare Blog posts | `https://blog.mcp.cloudflare.com/mcp` |
+| Cloudflare One CASB | SaaS security misconfiguration checks | `https://casb.mcp.cloudflare.com/mcp` |
+| Container | Spin up a sandbox dev environment | `https://containers.mcp.cloudflare.com/mcp` |
+| Demo Day | Minimal example Cloudflare MCP server | `https://demo-day.mcp.cloudflare.com/mcp` |
+| Digital Experience Monitoring | Critical-application health insight | `https://dex.mcp.cloudflare.com/mcp` |
+| DNS Analytics | DNS performance and issue debugging | `https://dns-analytics.mcp.cloudflare.com/mcp` |
+| Documentation | Up-to-date Cloudflare reference info | `https://docs.mcp.cloudflare.com/mcp` |
+| Logpush | Quick summaries of Logpush job health | `https://logs.mcp.cloudflare.com/mcp` |
+| Observability | App logs and analytics debugging | `https://observability.mcp.cloudflare.com/mcp` |
+| Radar | Cloudflare Radar internet insights | `https://radar.mcp.cloudflare.com/mcp` |
+| Workers Bindings | Workers storage/AI/compute primitives | `https://bindings.mcp.cloudflare.com/mcp` |
+| Workers Builds | Manage Cloudflare Workers Builds | `https://builds.mcp.cloudflare.com/mcp` |
+
+References:
+[Code Mode MCP blog post](https://blog.cloudflare.com/code-mode-mcp/),
+[github.com/cloudflare/mcp-server-cloudflare](https://github.com/cloudflare/mcp-server-cloudflare),
+[Cloudflare MCP servers docs](https://developers.cloudflare.com/agents/model-context-protocol/cloudflare/servers-for-cloudflare/).
+
+#### Adding more MCP servers per profile
+
+The shipped `cordis.patch.yml` intentionally stays at one server for Codex
+parity. To mount additional servers, create an overlay (e.g.
+`extra-mcp.yml`) and pass it after the profile:
+
+```yaml
+# extra-mcp.yml — add the Cloudflare docs + observability servers
+- insert:
+    - id: cloudflare-docs
+      name: '@deepseek-ai/dsh-mcp-client'
+      config:
+        serverName: cloudflare-docs
+        transport: streamable-http
+        url: https://docs.mcp.cloudflare.com/mcp
+    - id: cloudflare-observability
+      name: '@deepseek-ai/dsh-mcp-client'
+      config:
+        serverName: cloudflare-observability
+        transport: streamable-http
+        url: https://observability.mcp.cloudflare.com/mcp
+```
+
+```sh
+dsh --profile <profile> --patch ./extra-mcp.yml
+```
+
+(`--patch` is repeatable and applies after the profile layer, so it composes
+cleanly with the plugin's own `cloudflare-api` row.)
 
 ## Install
 

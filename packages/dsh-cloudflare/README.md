@@ -44,7 +44,16 @@ Slash commands (DSH grammar): `/cloudflare-build-agent` and
 `/cloudflare-build-mcp`.
 
 MCP server: `cloudflare-api` at `https://mcp.cloudflare.com/mcp` (one
-`@deepseek-ai/dsh-mcp-client` instance per the DSH convention).
+`@deepseek-ai/dsh-mcp-client` instance per the DSH convention) — Cloudflare's
+**Code Mode** server covering the full API (2,500+ endpoints in ~1,000
+tokens).
+
+For 1:1 Codex parity this package ships only Code Mode. Cloudflare also
+publishes focused domain-specific MCP servers
+([cloudflare/mcp-server-cloudflare](https://github.com/cloudflare/mcp-server-cloudflare));
+see the repository README for the full catalog (docs, observability,
+bindings, ai-gateway, audit logs, radar, browser, and more) and an
+`--patch` example for mounting them per profile.
 
 ## License
 

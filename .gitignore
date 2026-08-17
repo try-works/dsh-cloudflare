@@ -16,3 +16,6 @@ node_modules/
 # Package-level install (for building standalone)
 packages/dsh-cloudflare/node_modules/
 packages/dsh-cloudflare/package-lock.json
+
+# Recursive-mode runtime state (written by dsh-recursive-mode into the workspace)
+.recursive/
