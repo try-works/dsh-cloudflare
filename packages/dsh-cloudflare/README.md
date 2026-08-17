@@ -48,6 +48,19 @@ MCP server: `cloudflare-api` at `https://mcp.cloudflare.com/mcp` (one
 **Code Mode** server covering the full API (2,500+ endpoints in ~1,000
 tokens).
 
+The agent **defaults to this server** for live Cloudflare work: the
+`cloudflare` and `wrangler` skills instruct it to use Code Mode's
+search → execute flow before wrangler/curl/SDKs. The three Code Mode tools
+surface in DSH as:
+
+| Cloudflare tool | DSH tool | Purpose |
+| --- | --- | --- |
+| `search` | `mcp__cloudflare-api__search` | Find endpoints against the OpenAPI spec |
+| `execute` | `mcp__cloudflare-api__execute` | Call the API via `cloudflare.request()` |
+| `docs` | `mcp__cloudflare-api__docs` | Search the live Cloudflare docs |
+
+See `skills/cloudflare/references/api/codemode-mcp.md` for the full guide.
+
 For 1:1 Codex parity this package ships only Code Mode by default. Cloudflare
 also publishes focused domain-specific MCP servers
 ([cloudflare/mcp-server-cloudflare](https://github.com/cloudflare/mcp-server-cloudflare)),

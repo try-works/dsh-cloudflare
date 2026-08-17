@@ -7,6 +7,12 @@ description: Cloudflare Workers CLI for deploying, developing, and managing Work
 
 Your knowledge of Wrangler CLI flags, config fields, and subcommands may be outdated. **Prefer retrieval over pre-training** for any Wrangler task.
 
+> **Live-API default:** for account inspection/mutation, the Code Mode MCP
+> tools (`mcp__cloudflare-api__search` → `mcp__cloudflare-api__execute`) are
+> the default; see the `cloudflare` skill's `references/api/codemode-mcp.md`.
+> Use wrangler for local tooling: `wrangler dev`, `wrangler deploy`,
+> `wrangler types`, `wrangler check`, and config/template work.
+
 ## Retrieval Sources
 
 Fetch the **latest** information before writing or reviewing Wrangler commands and config. Do not rely on baked-in knowledge for CLI flags, config fields, or binding shapes.

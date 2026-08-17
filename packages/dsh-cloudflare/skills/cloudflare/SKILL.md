@@ -25,8 +25,31 @@ Fetch the **latest** information before citing specific numbers, API signatures,
 | Workers types | `npm pack @cloudflare/workers-types` or check `node_modules` | Type signatures, binding shapes, handler types |
 | Wrangler config schema | `node_modules/wrangler/config-schema.json` | Config fields, binding shapes, allowed values |
 | Product changelogs | `https://developers.cloudflare.com/changelog/` | Recent changes to limits, features, deprecations |
+| Cloudflare Code Mode MCP | `mcp__cloudflare-api__docs` (docs), `mcp__cloudflare-api__search` + `mcp__cloudflare-api__execute` (API) | Live account data, endpoint discovery, API calls |
 
 When a reference file and the docs disagree, **trust the docs**. This is especially important for: numeric limits, pricing tiers, type signatures, and configuration options.
+
+## Live API Access — Code Mode MCP (default)
+
+The plugin always mounts Cloudflare's **Code Mode** MCP server
+(`cloudflare-api`), which exposes the full Cloudflare API (2,500+ endpoints)
+in ~1,000 tokens via three tools. When the user asks to **inspect or act on
+their Cloudflare account** — list/create/update/delete Workers, DNS, KV, D1,
+R2, zones, tunnels, Zero Trust, etc. — **default to these tools** before
+wrangler, curl, or the SDKs:
+
+| DSH tool | Purpose |
+| --- | --- |
+| `mcp__cloudflare-api__search` | Find the right endpoint by running JS against the OpenAPI spec (`spec.paths`) |
+| `mcp__cloudflare-api__execute` | Call the API with `cloudflare.request(...)` |
+| `mcp__cloudflare-api__docs` | Search the live Cloudflare docs |
+
+Workflow: **search → execute** — confirm the method, path, and parameters
+with `search`, then make the call with `execute`. Use `docs` for
+product/limits/config questions. Reach for `wrangler`/curl/SDKs only for
+explicitly local tooling tasks, or when the MCP server is unavailable.
+
+Full guide and code patterns: `references/api/codemode-mcp.md`.
 
 ## Quick Decision Trees
 

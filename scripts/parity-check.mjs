@@ -67,4 +67,17 @@ for (const f of mcpFiles) {
   for (const u of urls) assert.match(u, /^https:\/\/[a-z0-9.-]+\.cloudflare\.com\/mcp$/, 'unexpected URL in ' + f + ': ' + u)
 }
 
-console.log('parity ok: 11 skills (9 vendored Codex + think + flue), 2 commands, 1 mcp server, ' + mcpFiles.length + ' optional MCP overlays')
+// ---- Code Mode default guidance ----
+// The cloudflare skill instructs the agent to default to the Code Mode MCP
+// server; the guide must exist and name all three DSH tool names.
+const codeModeGuide = join(pkg, 'skills', 'cloudflare', 'references', 'api', 'codemode-mcp.md')
+const guide = await readFile(codeModeGuide, 'utf8')
+for (const tool of [
+  'mcp__cloudflare-api__search',
+  'mcp__cloudflare-api__execute',
+  'mcp__cloudflare-api__docs',
+]) {
+  assert.ok(guide.includes(tool), 'codemode-mcp.md missing tool: ' + tool)
+}
+
+console.log('parity ok: 11 skills (9 vendored Codex + think + flue), 2 commands, 1 mcp server, ' + mcpFiles.length + ' optional MCP overlays, Code Mode default guidance')

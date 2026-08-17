@@ -3,4 +3,4 @@ interface:
   short_description: "Choose the right Cloudflare product and workflow"
   icon_small: "./assets/cloudflare-small.svg"
   icon_large: "./assets/cloudflare.png"
-  default_prompt: "Use Cloudflare context to choose the right product, verify setup, or plan the right deployment, data, or analytics workflow without guessing infrastructure."
+  default_prompt: "Default to the Cloudflare Code Mode MCP tools (mcp__cloudflare-api__search, mcp__cloudflare-api__execute, mcp__cloudflare-api__docs) to inspect or act on the user's Cloudflare account. Use search to find the endpoint, execute to call the API, and docs for product and limits questions. Fall back to wrangler, curl, or SDKs only for explicitly local or app-code workflows."

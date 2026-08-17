@@ -6,8 +6,9 @@ Guide for working with Cloudflare's REST API - authentication, SDK usage, common
 
 ```
 How are you calling the Cloudflare API?
+├─ From this agent (inspect/act on the account) → Code Mode MCP: mcp__cloudflare-api__search + __execute (default, see codemode-mcp.md)
 ├─ From Workers runtime → Use bindings, not REST API (see ../bindings/)
-├─ Server-side (Node/Python/Go) → Official SDK (see api.md)
+├─ Server-side application code (Node/Python/Go) → Official SDK (see api.md)
 ├─ CLI/scripts → Wrangler or curl (see configuration.md)
 ├─ Infrastructure-as-code → See ../pulumi/ or ../terraform/
 └─ One-off requests → curl examples (see api.md)
@@ -50,9 +51,11 @@ All SDKs are Stainless-generated from OpenAPI spec (consistent APIs).
 | Find usage patterns | patterns.md |
 | Debug errors/rate limits | gotchas.md |
 | Product-specific APIs | ../workers/, ../r2/, ../kv/, etc. |
+| Live API via the agent (Code Mode MCP) | codemode-mcp.md |
 
 ## In This Reference
 
+- **[codemode-mcp.md](codemode-mcp.md)** - Code Mode MCP: the agent's default path to live account data and API calls
 - **[api.md](api.md)** - SDK client initialization, pagination, error handling, examples
 - **[configuration.md](configuration.md)** - Environment variables, SDK config, Wrangler setup
 - **[patterns.md](patterns.md)** - Real-world patterns, batch operations, workflows

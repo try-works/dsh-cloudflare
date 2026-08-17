@@ -48,6 +48,38 @@ The parity check counts these separately: `11 skills (9 vendored Codex +
 think + flue)`, keeping the vendored surface auditable against the upstream
 plugin while the authored additions are clearly identified.
 
+## Authored additions: Code Mode MCP default
+
+Cloudflare's Code Mode MCP server (`cloudflare-api` →
+`https://mcp.cloudflare.com/mcp`) is the plugin's **single MCP server**, and
+the Codex plugin already relied on its `search()`/`execute()` model. This
+repository adds DSH-specific guidance so the agent **defaults to those tools**
+for live account work (they surface as `mcp__cloudflare-api__search`,
+`mcp__cloudflare-api__execute`, and `mcp__cloudflare-api__docs`). That
+guidance is authored, not vendored:
+
+- `skills/cloudflare/SKILL.md` — "Live API Access — Code Mode MCP (default)"
+  section plus a retrieval-sources row.
+- `skills/cloudflare/references/api/codemode-mcp.md` — full guide and code
+  patterns (new authored file).
+- `skills/cloudflare/references/api/README.md` — decision-tree/reading-order
+  links into the guide.
+- `skills/cloudflare/agents/openai.yaml` and
+  `skills/wrangler/SKILL.md` — prompt-level "prefer Code Mode MCP" notes.
+
+These are additive guidance edits to otherwise-vendored files; the vendored
+**surface** (11 skills, 2 commands, 1 MCP server) is unchanged and still
+audited by `scripts/parity-check.mjs`.
+
+## Authored additions: optional MCP overlays
+
+`packages/dsh-cloudflare/mcp/` ships one ready-to-apply `--patch` overlay
+per Cloudflare domain-specific MCP server (16 files) plus `all.yml`. These
+are authored from the
+[cloudflare/mcp-server-cloudflare](https://github.com/cloudflare/mcp-server-cloudflare)
+catalog and are **opt-in** — the shipped surface stays at the single
+`cloudflare-api` Code Mode server for 1:1 Codex parity.
+
 ## DSH packaging
 
 The package is a DSH **bundle**: `packages/dsh-cloudflare/package.json`
@@ -69,5 +101,5 @@ node scripts/gen-manifest.mjs
 The published artifact is built before packing (`prepack` runs
 `scripts/typecheck.mjs`, which emits `lib/`); the tarball ships
 `lib/*.js`, `lib/*.d.ts`, `skills`, `commands`, `assets`,
-`plugin.json`, `.mcp.json`, `src`, and `cordis.patch.yml` plus the
-package `README.md` and `LICENSE`.
+`plugin.json`, `.mcp.json`, `src`, `mcp`, and `cordis.patch.yml`
+plus the package `README.md` and `LICENSE`.
