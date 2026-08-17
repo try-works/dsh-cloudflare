@@ -42,4 +42,29 @@ const mcp = JSON.parse(await readFile(join(pkg, '.mcp.json'), 'utf8'))
 assert.deepEqual(Object.keys(mcp.mcpServers), ['cloudflare-api'], 'expected 1 MCP server')
 assert.equal(mcp.mcpServers['cloudflare-api'].url, 'https://mcp.cloudflare.com/mcp')
 
-console.log('parity ok: 11 skills (9 vendored Codex + think + flue), 2 commands, 1 mcp server')
+// ---- optional MCP overlays ----
+// Each file in mcp/ is one optional Cloudflare MCP server overlay (plus
+// all.yml = the combined opt-in). The shipped plugin stays at one server for
+// Codex parity; these are user-opt-in --patch layers.
+const mcpDir = join(pkg, 'mcp')
+const mcpFiles = (await readdir(mcpDir)).filter(f => f.endsWith('.yml')).sort()
+const EXPECTED_MCP_OVERLAYS = [
+  'ai-gateway.yml', 'all.yml', 'audit-logs.yml', 'autorag.yml', 'bindings.yml',
+  'blog.yml', 'browser.yml', 'builds.yml', 'casb.yml', 'containers.yml',
+  'demo-day.yml', 'dex.yml', 'dns-analytics.yml', 'docs.yml', 'logpush.yml',
+  'observability.yml', 'radar.yml',
+]
+assert.deepEqual(mcpFiles, EXPECTED_MCP_OVERLAYS, 'optional MCP overlay set changed')
+
+const SERVER_NAME = /^[A-Za-z0-9_-]{1,32}$/
+for (const f of mcpFiles) {
+  const content = await readFile(join(mcpDir, f), 'utf8')
+  const names = [...content.matchAll(/serverName: ([\w-]+)/g)].map(m => m[1])
+  const urls = [...content.matchAll(/url: (\S+)/g)].map(m => m[1])
+  assert.ok(names.length > 0, 'no serverName in ' + f)
+  assert.equal(names.length, urls.length, 'serverName/url mismatch in ' + f)
+  for (const n of names) assert.match(n, SERVER_NAME, 'invalid serverName in ' + f + ': ' + n)
+  for (const u of urls) assert.match(u, /^https:\/\/[a-z0-9.-]+\.cloudflare\.com\/mcp$/, 'unexpected URL in ' + f + ': ' + u)
+}
+
+console.log('parity ok: 11 skills (9 vendored Codex + think + flue), 2 commands, 1 mcp server, ' + mcpFiles.length + ' optional MCP overlays')

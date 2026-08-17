@@ -1,0 +1,16 @@
+# Optional Cloudflare MCP server overlay: Workers Bindings.
+#
+# NOT mounted by the plugin by default — for 1:1 Codex parity the bundle ships
+# only the cloudflare-api Code Mode server. Opt in per profile with:
+#
+#   dsh --profile <profile> --patch <path-to-this-file>
+#
+# See the repository README for the full Cloudflare MCP server catalog.
+
+- insert:
+    - id: cloudflare-bindings
+      name: '@deepseek-ai/dsh-mcp-client'
+      config:
+        serverName: cloudflare-bindings
+        transport: streamable-http
+        url: https://bindings.mcp.cloudflare.com/mcp

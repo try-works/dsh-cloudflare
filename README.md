@@ -89,35 +89,50 @@ References:
 [github.com/cloudflare/mcp-server-cloudflare](https://github.com/cloudflare/mcp-server-cloudflare),
 [Cloudflare MCP servers docs](https://developers.cloudflare.com/agents/model-context-protocol/cloudflare/servers-for-cloudflare/).
 
-#### Adding more MCP servers per profile
+#### Adding more MCP servers per profile (optional)
 
-The shipped `cordis.patch.yml` intentionally stays at one server for Codex
-parity. To mount additional servers, create an overlay (e.g.
-`extra-mcp.yml`) and pass it after the profile:
-
-```yaml
-# extra-mcp.yml — add the Cloudflare docs + observability servers
-- insert:
-    - id: cloudflare-docs
-      name: '@deepseek-ai/dsh-mcp-client'
-      config:
-        serverName: cloudflare-docs
-        transport: streamable-http
-        url: https://docs.mcp.cloudflare.com/mcp
-    - id: cloudflare-observability
-      name: '@deepseek-ai/dsh-mcp-client'
-      config:
-        serverName: cloudflare-observability
-        transport: streamable-http
-        url: https://observability.mcp.cloudflare.com/mcp
-```
+The package ships one ready-to-apply overlay per optional server under
+`packages/dsh-cloudflare/mcp/` (plus `all.yml` to opt in to every
+domain-specific server at once). The shipped `cordis.patch.yml` intentionally
+stays at one server for Codex parity — these overlays are opt-in:
 
 ```sh
-dsh --profile <profile> --patch ./extra-mcp.yml
+# One server
+dsh --profile <profile> --patch packages/dsh-cloudflare/mcp/docs.yml
+
+# Several servers (--patch is repeatable)
+dsh --profile <profile> \
+  --patch packages/dsh-cloudflare/mcp/docs.yml \
+  --patch packages/dsh-cloudflare/mcp/observability.yml
+
+# Every domain-specific server
+dsh --profile <profile> --patch packages/dsh-cloudflare/mcp/all.yml
 ```
 
-(`--patch` is repeatable and applies after the profile layer, so it composes
-cleanly with the plugin's own `cloudflare-api` row.)
+| Overlay file | Server |
+| --- | --- |
+| `mcp/ai-gateway.yml` | AI Gateway |
+| `mcp/audit-logs.yml` | Audit Logs |
+| `mcp/autorag.yml` | AutoRAG |
+| `mcp/browser.yml` | Browser Run |
+| `mcp/blog.yml` | Cloudflare Blog |
+| `mcp/casb.yml` | Cloudflare One CASB |
+| `mcp/containers.yml` | Container |
+| `mcp/demo-day.yml` | Demo Day |
+| `mcp/dex.yml` | Digital Experience Monitoring |
+| `mcp/dns-analytics.yml` | DNS Analytics |
+| `mcp/docs.yml` | Documentation |
+| `mcp/logpush.yml` | Logpush |
+| `mcp/observability.yml` | Observability |
+| `mcp/radar.yml` | Radar |
+| `mcp/bindings.yml` | Workers Bindings |
+| `mcp/builds.yml` | Workers Builds |
+| `mcp/all.yml` | All of the above |
+
+Each overlay is a plain `cordis.patch.yml`-format list with a single
+`@deepseek-ai/dsh-mcp-client` row (id/name `cloudflare-<slug>`). They compose
+cleanly after the profile layer and do not alter the always-on
+`cloudflare-api` row.
 
 ## Install
 

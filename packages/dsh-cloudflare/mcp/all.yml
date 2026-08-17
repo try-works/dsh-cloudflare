@@ -1,0 +1,107 @@
+# Optional Cloudflare MCP server overlay: ALL domain-specific servers.
+#
+# Opts in to every Cloudflare domain-specific MCP server listed in the
+# repository README, alongside the always-on cloudflare-api Code Mode server.
+# NOT mounted by default — apply explicitly:
+#
+#   dsh --profile <profile> --patch <path-to-this-file>
+#
+# Prefer the per-server files in this directory to pick a subset.
+
+- insert:
+    - id: cloudflare-ai-gateway
+      name: '@deepseek-ai/dsh-mcp-client'
+      config:
+        serverName: cloudflare-ai-gateway
+        transport: streamable-http
+        url: https://ai-gateway.mcp.cloudflare.com/mcp
+    - id: cloudflare-audit-logs
+      name: '@deepseek-ai/dsh-mcp-client'
+      config:
+        serverName: cloudflare-audit-logs
+        transport: streamable-http
+        url: https://auditlogs.mcp.cloudflare.com/mcp
+    - id: cloudflare-autorag
+      name: '@deepseek-ai/dsh-mcp-client'
+      config:
+        serverName: cloudflare-autorag
+        transport: streamable-http
+        url: https://autorag.mcp.cloudflare.com/mcp
+    - id: cloudflare-browser
+      name: '@deepseek-ai/dsh-mcp-client'
+      config:
+        serverName: cloudflare-browser
+        transport: streamable-http
+        url: https://browser.mcp.cloudflare.com/mcp
+    - id: cloudflare-blog
+      name: '@deepseek-ai/dsh-mcp-client'
+      config:
+        serverName: cloudflare-blog
+        transport: streamable-http
+        url: https://blog.mcp.cloudflare.com/mcp
+    - id: cloudflare-casb
+      name: '@deepseek-ai/dsh-mcp-client'
+      config:
+        serverName: cloudflare-casb
+        transport: streamable-http
+        url: https://casb.mcp.cloudflare.com/mcp
+    - id: cloudflare-containers
+      name: '@deepseek-ai/dsh-mcp-client'
+      config:
+        serverName: cloudflare-containers
+        transport: streamable-http
+        url: https://containers.mcp.cloudflare.com/mcp
+    - id: cloudflare-demo-day
+      name: '@deepseek-ai/dsh-mcp-client'
+      config:
+        serverName: cloudflare-demo-day
+        transport: streamable-http
+        url: https://demo-day.mcp.cloudflare.com/mcp
+    - id: cloudflare-dex
+      name: '@deepseek-ai/dsh-mcp-client'
+      config:
+        serverName: cloudflare-dex
+        transport: streamable-http
+        url: https://dex.mcp.cloudflare.com/mcp
+    - id: cloudflare-dns-analytics
+      name: '@deepseek-ai/dsh-mcp-client'
+      config:
+        serverName: cloudflare-dns-analytics
+        transport: streamable-http
+        url: https://dns-analytics.mcp.cloudflare.com/mcp
+    - id: cloudflare-docs
+      name: '@deepseek-ai/dsh-mcp-client'
+      config:
+        serverName: cloudflare-docs
+        transport: streamable-http
+        url: https://docs.mcp.cloudflare.com/mcp
+    - id: cloudflare-logpush
+      name: '@deepseek-ai/dsh-mcp-client'
+      config:
+        serverName: cloudflare-logpush
+        transport: streamable-http
+        url: https://logs.mcp.cloudflare.com/mcp
+    - id: cloudflare-observability
+      name: '@deepseek-ai/dsh-mcp-client'
+      config:
+        serverName: cloudflare-observability
+        transport: streamable-http
+        url: https://observability.mcp.cloudflare.com/mcp
+    - id: cloudflare-radar
+      name: '@deepseek-ai/dsh-mcp-client'
+      config:
+        serverName: cloudflare-radar
+        transport: streamable-http
+        url: https://radar.mcp.cloudflare.com/mcp
+    - id: cloudflare-bindings
+      name: '@deepseek-ai/dsh-mcp-client'
+      config:
+        serverName: cloudflare-bindings
+        transport: streamable-http
+        url: https://bindings.mcp.cloudflare.com/mcp
+    - id: cloudflare-builds
+      name: '@deepseek-ai/dsh-mcp-client'
+      config:
+        serverName: cloudflare-builds
+        transport: streamable-http
+        url: https://builds.mcp.cloudflare.com/mcp

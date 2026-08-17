@@ -48,12 +48,23 @@ MCP server: `cloudflare-api` at `https://mcp.cloudflare.com/mcp` (one
 **Code Mode** server covering the full API (2,500+ endpoints in ~1,000
 tokens).
 
-For 1:1 Codex parity this package ships only Code Mode. Cloudflare also
-publishes focused domain-specific MCP servers
-([cloudflare/mcp-server-cloudflare](https://github.com/cloudflare/mcp-server-cloudflare));
-see the repository README for the full catalog (docs, observability,
-bindings, ai-gateway, audit logs, radar, browser, and more) and an
-`--patch` example for mounting them per profile.
+For 1:1 Codex parity this package ships only Code Mode by default. Cloudflare
+also publishes focused domain-specific MCP servers
+([cloudflare/mcp-server-cloudflare](https://github.com/cloudflare/mcp-server-cloudflare)),
+and this package ships one ready-to-apply `--patch` overlay for each under
+`mcp/` (plus `mcp/all.yml` for all of them). Opt in per profile:
+
+```sh
+# One server
+dsh --profile <profile> --patch <node_modules>/@try-works/dsh-cloudflare/mcp/docs.yml
+
+# Every domain-specific server
+dsh --profile <profile> --patch <node_modules>/@try-works/dsh-cloudflare/mcp/all.yml
+```
+
+`--patch` is repeatable; each overlay is one `@deepseek-ai/dsh-mcp-client`
+row and composes cleanly beside the always-on `cloudflare-api` Code Mode row.
+See the repository README for the full catalog table.
 
 ## License
 

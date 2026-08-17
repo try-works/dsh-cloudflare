@@ -25,7 +25,8 @@
     },
     "./cordis.patch.yml": "./cordis.patch.yml",
     "./src/*": "./src/*",
-    "./package.json": "./package.json"
+    "./package.json": "./package.json",
+    "./mcp/*": "./mcp/*"
   },
   "files": [
     "lib/*.js",
@@ -35,6 +36,7 @@
     "assets",
     "plugin.json",
     ".mcp.json",
+    "mcp",
     "src",
     "cordis.patch.yml"
   ],
