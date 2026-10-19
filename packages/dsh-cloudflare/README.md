@@ -6,6 +6,15 @@ plugin** — 11 Cloudflare skill bundles (9 vendored from
 plus authored `think` and `flue` skills), the two Cloudflare slash commands,
 and the official Cloudflare API MCP server.
 
+## Compatibility
+
+This release targets **DSH 0.2.x**. The bundle declares
+`"engines": { "dsh": ">=0.2.0 <0.3.0" }`, which is the range DSH checks before
+it admits a bundle; 0.1.x releases declared `^0.1.0-rc.5` peers and are refused
+by a 0.2 runtime. Peer ranges track the same generation
+(`@deepseek-ai/dsh-skill`, `dsh-commands`, `dsh-llm` `^0.2.0`;
+`@deepseek-ai/cordis` `^4.0.0`).
+
 ## Install
 
 `@try-works/dsh-cloudflare` is a DSH **bundle**: its package.json declares

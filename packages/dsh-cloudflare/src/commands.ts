@@ -82,8 +82,11 @@ export function apply(ctx: Context): void {
       input: { hint: spec.hint },
       handler: async (invocation: CommandInvocation): Promise<CommandResult> => {
         const brief = renderBrief(await loadBrief(spec.file), invocation.rawInput)
+        // DSH 0.2 message sources are user | model | tool | system-prompt; the
+        // queued brief rides the user source (same shape the built-in
+        // command-goal handler uses for agent.followup).
         invocation.agent.followup(createUserMessage({
-          source: { kind: 'plugin', plugin: 'dsh-cloudflare', form: 'instructions' },
+          source: { kind: 'user' },
           content: [{ type: 'text', text: brief }],
         }))
         return { kind: 'success' }

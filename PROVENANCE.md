@@ -80,6 +80,18 @@ are authored from the
 catalog and are **opt-in** — the shipped surface stays at the single
 `cloudflare-api` Code Mode server for 1:1 Codex parity.
 
+## DSH runtime compatibility
+
+The bundle declares `"engines": { "dsh": ">=0.2.0 <0.3.0" }` and peer ranges on
+`@deepseek-ai/dsh-skill`, `dsh-commands`, and `dsh-llm` at `^0.2.0`
+(`@deepseek-ai/cordis` at `^4.0.0`). DSH admits a bundle by `engines.dsh`
+first and only falls back to its `@deepseek-ai/dsh*` peer ranges, so a 0.2
+runtime refuses the earlier 0.1.x releases without an exact-version exemption.
+
+The 0.2.0 release also moves the slash-command follow-up message onto the
+supported `{ kind: 'user' }` message source; the previous `kind: 'plugin'`
+source is not part of DSH 0.2's `MessageSourceMap`.
+
 ## DSH packaging
 
 The package is a DSH **bundle**: `packages/dsh-cloudflare/package.json`

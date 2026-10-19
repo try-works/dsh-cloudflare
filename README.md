@@ -8,6 +8,13 @@ It bundles the Codex plugin's complete skill surface and its two slash commands,
 adds two further Cloudflare skills (`think` and `flue`), and ships a
 ready-to-apply `cordis.yml` for its single MCP server.
 
+## DSH compatibility
+
+This release targets **DSH 0.2.x** (`engines.dsh: ">=0.2.0 <0.3.0"`). DSH
+refuses a bundle whose declared requirement the running runtime does not
+satisfy, so 0.1.x releases (which declared `^0.1.0-rc.5` peers) do not load on
+a 0.2 runtime unless an exact-version exemption is granted.
+
 ## What it provides
 
 ### Skills
